@@ -4,7 +4,8 @@
   "description": "get real time infomation for public transport and traffic in dublin",
   "permissions": [
     "https://*/",
-    "http://*/"
+    "http://*/",
+    "geolocation"
   ],
   "version": "1.0",
   "browser_action": {
