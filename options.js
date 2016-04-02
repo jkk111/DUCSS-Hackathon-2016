@@ -1,3 +1,5 @@
+var preferredBusData = [];
+var preferredRailData = [];
 function save_options() {
   var preferedStop = document.getElementById('preferedStop').value;
   var preferedRoute = document.getElementById('preferedRoute').value;
@@ -5,7 +7,7 @@ function save_options() {
   var finishTime = document.getElementById('finishTime').value;
   chrome.storage.sync.set({
     preferedStop: preferedStop,
-    preferedRoute: preferedRoute,
+    preferedTrain: preferredRailData,
     travelTime: travelTime,
     finishTime: finishTime
   }, function() {
@@ -18,8 +20,8 @@ function save_options() {
 }
 
 function addRail() {
-  var val = document.getElementById("railStopsDropdown").innerHTML
-  console.log(val);
+  var val = document.getElementById("railStopsDropdown").value
+  preferredRailData.push(val);
 }
 
 function restore_options() {
@@ -33,6 +35,7 @@ function restore_options() {
     var preferredTrainStops = document.getElementById("preferredRailStops");
     var busStopsDropdown = document.getElementById("busStopsDropdown");
     var railStopsDropdown = document.getElementById("railStopsDropdown");
+    preferredRailData = items.preferedTrain;
     getBusStops(function(busStops) {
       busStops = busStops.results
       for(var i = 0 ; i < busStops.length; i++) {
@@ -46,12 +49,10 @@ function restore_options() {
       for(var i = 0 ; i < railStops.length; i++) {
         var el = document.createElement("option");
         el.innerHTML = railStops[i].name;
-        el.value = i;
+        el.value = railStops[i].name;
         railStopsDropdown.appendChild(el);
       }
     })
-    document.getElementById('travelTime').value = items.travelTime;
-    document.getElementById('finishTime').checked = items.finishTime;
     document.getElementById('save').addEventListener('click', save_options);
     document.getElementById('addRail').addEventListener('click', addRail);
     document.getElementById('addBus').addEventListener('click', addBus);
