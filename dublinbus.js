@@ -8,7 +8,7 @@ function getStops() {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", BUS_STOPS_URL, true);
   xhr.onload = function() {
-    console.log(parseBusStops(this.responseText));
+    console.log(this.responseText);
   }
   xhr.send();
 }
@@ -18,7 +18,7 @@ function getBusServices() {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", BUS_SERVICES_URL, true);
   xhr.onload = function() {
-    console.log(parseBusServices(this.responseText));
+    console.log(this.responseText);
   }
   xhr.send();
 }
