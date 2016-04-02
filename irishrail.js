@@ -1,5 +1,5 @@
-var STOPS_URL = "http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML";
-var TIMES_URL = "http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML";
+var STOPS_URL = "https://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML";
+var TIMES_URL = "https://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML";
 
 function getStops(cb) {
   var stopsXML;
@@ -8,7 +8,7 @@ function getStops(cb) {
   xhr.onload = function() {
     console.log(parseStops(this.responseText));
     if(cb)
-      cb(parseStationData(this.responseText));
+      cb(parseStops(this.responseText));
     else
       throw new Error("NO CALLBACK SPECIFIED");
   }
@@ -39,6 +39,7 @@ function parseStops(stops) {
   for(var i = 0 ; i < stopNames.length; i++) {
     stopNamesParsed.push({ name: stopNames[i].innerHTML, lon: stopLon[i].innerHTML, lat: stopLat[i].innerHTML});
   }
+  console.log(stopNamesParsed.length)
   return stopNamesParsed;
 }
 
