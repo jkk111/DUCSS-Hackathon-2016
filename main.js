@@ -1,3 +1,12 @@
+var date,hour,minute;
+
+function getTime(){
+  date = new Date();
+  hour = date.getHours();
+  minute = date.getMinutes();
+ 
+}
+
 var railStops, busStops;
 var dropdown, busStopsDropdown, railInfo, busInfo;
 document.addEventListener("DOMContentLoaded", function() {
@@ -61,7 +70,17 @@ function railListener() {
         var time = document.createElement("td");
         dest.innerHTML = data[i].dest;
         time.innerHTML = data[i].time;
-        time.classList.add("red");
+        getTime();
+        var nums = data[i].time.split(":");
+        var hourNum = nums[0];
+        var minNum = nums[1];
+        if (hour==hourNum){
+          if (parseInt(minNum)<parseInt(minute)+30){
+            time.classList.add("red");
+          }
+        } else {
+          time.classList.add("green");
+        }
         row.appendChild(dest);
         row.appendChild(time);
         railInfo.appendChild(row);
