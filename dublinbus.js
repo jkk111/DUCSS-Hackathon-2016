@@ -4,13 +4,13 @@ var BUS_STOPS_URL = "http://dublinbus-api.heroku.com/stops";
 var BUS_SERVICES_URL = "http://dublinbus-api.heroku.com/services";
 
 function getStops() {
-    var busStopsXML;
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", BUS_STOPS_URL, true);
-    xhr.onload = function() {
-      console.log(parseStops(this.responseText));
-    }
-    xhr.send();
+  var busStopsXML;
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", BUS_STOPS_URL, true);
+  xhr.onload = function() {
+    console.log(parseBusStops(this.responseText));
+  }
+  xhr.send();
 }
 
 function getBusServices() {
@@ -18,7 +18,7 @@ function getBusServices() {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", BUS_SERVICES_URL, true);
   xhr.onload = function() {
-    console.log(parseServices(this.responseText));
+    console.log(parseBusServices(this.responseText));
   }
   xhr.send();
 }
