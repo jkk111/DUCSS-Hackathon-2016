@@ -3,6 +3,7 @@
 <html>
   <head>
     <script type="text/javascript" src="irishrail.js"></script>
+    <script type="text/javascript" src="dublinbus.js"></script>
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="traffic_demo.js"></script>
     <style>
@@ -21,21 +22,28 @@
   <body>
     <div class="content">
       <div id="railStops">
-        <select id="railStopsDropdown">
-          <option>--------</option>
-        </select>
         <div id="rtData">
           <div id="rail">
             <h3>Irish Rail</h3>
+            <select id="railStopsDropdown">
+              <option>--------</option>
+            </select>
             <table id="rail-data">
 
             </table>
           </div>
+          </hr>
           <div id="luas">
 
           </div>
           <div id="bus">
+            <h3>Dublin Bus</h3>
+            <select id="busStopsDropdown">
+              <option>--------</option>
+            </select>
+            <table id="bus-data">
 
+            </table>
           </div>
         </div>
       </div>
