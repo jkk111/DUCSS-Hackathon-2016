@@ -6,7 +6,7 @@ function getStops() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", STOPS_URL, true);
     xhr.onload = function() {
-      console.log(this.responseText);
+      console.log(parseStops(this.responseText));
     }
     xhr.send();
 }
