@@ -1,3 +1,5 @@
+//https://github.com/jneill/dublinbus-api
+
 var STOPS_URL = "http://dublinbus-api.heroku.com/stops";
 var SERVICES_URL = "http://dublinbus-api.heroku.com/services";
 
