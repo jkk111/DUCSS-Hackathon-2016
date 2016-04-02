@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
       var el = document.createElement("option");
       el.value = i;
       el.innerHTML = data[i].name;
+
       dropdown.appendChild(el);
     }
   })
@@ -60,6 +61,7 @@ function railListener() {
         var time = document.createElement("td");
         dest.innerHTML = data[i].dest;
         time.innerHTML = data[i].time;
+        time.classList.add("red");
         row.appendChild(dest);
         row.appendChild(time);
         railInfo.appendChild(row);
