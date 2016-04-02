@@ -23,7 +23,7 @@ function getBusServices() {
   xhr.send();
 }
 
-function parseStops(stops) {
+function parseBusStops(stops) {
   //TODO
   return parsedStops;
 }
