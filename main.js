@@ -30,4 +30,3 @@ document.addEventListener("DOMContentLoaded", function() {
     })
   })
 })
-getBusStopInfo(184);
