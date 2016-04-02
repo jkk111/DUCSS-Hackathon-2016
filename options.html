@@ -2,26 +2,31 @@
 
 <html>
   <head>
+  <style>
+      select, input {
+        display: block;
+      }
+  </style>
     <title>
       Options
     </title>
+    <script type="text/javascript" src="dublinbus.js"></script>
+    <script type="text/javascript" src="irishrail.js"></script>
+    <script src="options.js"></script>
   </head>
   <body>
-    What is your prefered bus stop?
-    <select id="preferedStop">
-      <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
+    Add A train station
+    <select id="railStopsDropdown">
+      <option>--------</option>
     </select>
-
+      <button id="addRail">add</button>
     <br>
 
-    What is your prefered bus route?
-    <select id="preferedRoute">
-      <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
+    Add a bus stop
+    <select id="busStopsDropdown">
+        <option>--------</option>
     </select>
+    <button id="addBus">add</button>
 
     <br>
 
@@ -29,14 +34,18 @@
     <input id="travelTime" placeholder="minutes"></input>
 
     <br>
+      Preferred bus stops
+    <select id="preferredBusStops">
+        <option>--------</option>
 
-    what time do you finish work/college?
-    <input id="finishTime" placeholder="hour"></input>
+    </select>
+    preferred rail stops
+    <select id="preferredRailStops">
+        <option>--------</option>
 
-    <br>
+    </select>
 
     <div id="status"></div>
     <button id="save">Save</button>
-    <script src="options.js"></script>
   </body>
 </html>

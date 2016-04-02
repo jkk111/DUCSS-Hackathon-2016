@@ -5,7 +5,8 @@
   "permissions": [
     "https://*/",
     "http://*/",
-    "geolocation"
+    "geolocation",
+    "storage"
   ],
   "version": "1.0",
   "browser_action": {
