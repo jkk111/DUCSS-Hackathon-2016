@@ -22,9 +22,11 @@ function parseStops(stops) {
   var parser = new DOMParser();
   var els = parser.parseFromString(stops, text.xml);
   var stopNames = els.querySelectorAll("StationDesc");
+  var stopLon = els.querySelectorAll("StationLatitude");
+  var stopLat = els.querySelectorAll("StationLatitude")
   var stopNamesParsed = [];
   for(var i = 0 ; i < stopNames; i++) {
-    stopNamesParsed.push(stopNames[i].innerHTML);
+    stopNamesParsed.push({ name: stopNames[i].innerHTML, lon: stopLon[i].innerHTML, lat: stopLat[i].innerHTML});
   }
   return stopNamesParsed;
 }
