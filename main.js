@@ -2,9 +2,9 @@ var date,hour,minute;
 
 function getTime(){
   date = new Date();
-  hour = date.getHours();
-  minute = date.getMinutes();
- 
+  hour = parseInt(date.getHours());
+  minute = parseInt(date.getMinutes());
+
 }
 
 var railStops, busStops;
@@ -71,15 +71,16 @@ function railListener() {
         dest.innerHTML = data[i].dest;
         time.innerHTML = data[i].time;
         getTime();
-        var nums = data[i].time.split(":");
-        var hourNum = nums[0];
-        var minNum = nums[1];
-        if (hour==hourNum){
-          if (parseInt(minNum)<parseInt(minute)+30){
-            time.classList.add("red");
-          }
+        var superSafeTime = 30;
+        var safeTime = 15;
+        var trainNums = data[i].time.split(":");
+        var difference = ((parseInt(trainNums[0]) * 60) + parseInt(trainNums[1])) - (hour * 60 + minute);
+        if (difference >= superSafeTime){
+            time.classList.add("green");
+        } else if (difference >= safeTime){
+          time.classList.add("orange");
         } else {
-          time.classList.add("green");
+          time.classList.add("red");
         }
         row.appendChild(dest);
         row.appendChild(time);
