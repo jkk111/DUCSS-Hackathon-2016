@@ -1,10 +1,12 @@
-var railStops, busStops;
-var dropdown, busStopsDropdown, railInfo, busInfo;
+var railStops, busStops, luasStops;
+var dropdown, busStopsDropdown, luasDropdown, luasInfo, railInfo, busInfo;
 document.addEventListener("DOMContentLoaded", function() {
   dropdown = document.getElementById("railStopsDropdown");
   busStopsDropdown = document.getElementById("busStopsDropdown");
+  luasDropdown = document.getElementById("luasDropdown");
   dropdown.addEventListener("change", railListener);
   busStopsDropdown.addEventListener("change", busListener);
+  luasDropdown.addEventListener("change", luasListener);
   getRailStops(function(data) {
     railStops = data;
     railInfo = document.getElementById("rail-data");
@@ -14,6 +16,16 @@ document.addEventListener("DOMContentLoaded", function() {
       el.innerHTML = data[i].name;
 
       dropdown.appendChild(el);
+    }
+  })
+  getLuasStops(function(data) {
+    luasStops = data;
+    luasInfo = document.getElementById("luas-data");
+    for(var i = 0 ; i < luasStops.length; i++) {
+      var el = document.createElement("option");
+      el.innerHTML = luasStops[i];
+      el.value = luasStops[i];
+      luasDropdown.appendChild(el);
     }
   })
   getBusStops(function(data) {
@@ -61,11 +73,34 @@ function railListener() {
         var time = document.createElement("td");
         dest.innerHTML = data[i].dest;
         time.innerHTML = data[i].time;
-        time.classList.add("red");
         row.appendChild(dest);
         row.appendChild(time);
+
         railInfo.appendChild(row);
       }
     })
+  }
+}
+
+function luasListener() {
+  console.log(luasDropdown.value);
+  if(luasDropdown.value != "--------" && luasDropdown.value != "-RED LINE-" && luasDropdown.value != "-GREEN LINE-") {
+    getLuasStopInfo(luasDropdown.value, function(data) {
+      console.log(data);
+      luasInfo.innerHTML = "";
+      for(var i = 0 ; i < data.length; i++) {
+        var row = document.createElement("tr");
+        var dir = document.createElement("td");
+        var dest = document.createElement("td");
+        var time = document.createElement("td");
+        dir.innerHTML = data[i].dir;
+        dest.innerHTML = data[i].dest;
+        time.innerHTML = data[i].time;
+        row.appendChild(dir);
+        row.appendChild(dest);
+        row.appendChild(time);
+        luasInfo.appendChild(row);
+      }
+    });
   }
 }

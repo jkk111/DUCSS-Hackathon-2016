@@ -3,23 +3,24 @@
 <html>
   <head>
     <script type="text/javascript" src="irishrail.js"></script>
+    <script type="text/javascript" src="luas.js"></script>
     <script type="text/javascript" src="dublinbus.js"></script>
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="traffic_demo.js"></script>
     <style>
-    .content {
-      width:400px;
-    }
-    .transport {
-      width: 25%;
-      float:left;
-    }
-    .title {
-      text-align: center;
-    }
-    .red {
-      color: red;
-    }
+      .content {
+        width:400px;
+      }
+      .transport {
+        width: 25%;
+        float:left;
+      }
+      .title {
+        text-align: center;
+      }
+      .red {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -37,7 +38,13 @@
           </div>
           </hr>
           <div id="luas">
+            <h3>Luas</h3>
+            <select id="luasDropdown">
+              <option>--------</option>
+            </select>
+            <table id="luas-data">
 
+            </table>
           </div>
           <div id="bus">
             <h3>Dublin Bus</h3>
