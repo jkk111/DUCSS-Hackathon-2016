@@ -1,5 +1,14 @@
 var railStops, busStops, luasStops;
 var dropdown, busStopsDropdown, luasDropdown, luasInfo, railInfo, busInfo;
+var date,hour,minute;
+
+function getTime(){
+  date = new Date();
+  hour = parseInt(date.getHours());
+  minute = parseInt(date.getMinutes());
+
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   dropdown = document.getElementById("railStopsDropdown");
   busStopsDropdown = document.getElementById("busStopsDropdown");
@@ -73,6 +82,18 @@ function railListener() {
         var time = document.createElement("td");
         dest.innerHTML = data[i].dest;
         time.innerHTML = data[i].time;
+        getTime();
+        var superSafeTime = 30;
+        var safeTime = 15;
+        var trainNums = data[i].time.split(":");
+        var difference = ((parseInt(trainNums[0]) * 60) + parseInt(trainNums[1])) - (hour * 60 + minute);
+        if (difference >= superSafeTime){
+            time.classList.add("green");
+        } else if (difference >= safeTime){
+          time.classList.add("orange");
+        } else {
+          time.classList.add("red");
+        }
         row.appendChild(dest);
         row.appendChild(time);
 
