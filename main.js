@@ -13,42 +13,103 @@ document.addEventListener("DOMContentLoaded", function() {
   dropdown = document.getElementById("railStopsDropdown");
   busStopsDropdown = document.getElementById("busStopsDropdown");
   luasDropdown = document.getElementById("luasDropdown");
+  document.getElementById("railSearch").addEventListener("input", function(e) {
+    updateRailItems(searchRailItems(e.target.value));
+  })
+  document.getElementById("luasSearch").addEventListener("input", function(e) {
+    updateLuasItems(searchLuasItems(e.target.value));
+  })
+  document.getElementById("busSearch").addEventListener("input", function(e) {
+    updateBusItems(searchBusItems(e.target.value));
+  })
   dropdown.addEventListener("change", railListener);
   busStopsDropdown.addEventListener("change", busListener);
   luasDropdown.addEventListener("change", luasListener);
-  getRailStops(function(data) {
-    railStops = data;
-    railInfo = document.getElementById("rail-data");
-    for(var i = 0 ; i < data.length; i++) {
-      var el = document.createElement("option");
-      el.value = i;
-      el.innerHTML = data[i].name;
-
-      dropdown.appendChild(el);
-    }
-  })
-  getLuasStops(function(data) {
-    luasStops = data;
-    luasInfo = document.getElementById("luas-data");
-    for(var i = 0 ; i < luasStops.length; i++) {
-      var el = document.createElement("option");
-      el.innerHTML = luasStops[i];
-      el.value = luasStops[i];
-      luasDropdown.appendChild(el);
-    }
-  })
-  getBusStops(function(data) {
-    busStops = data.results;
-    busInfo = document.getElementById("bus-data");
-    console.log(data);
-    for(var i = 0 ; i < busStops.length; i++) {
-      var el = document.createElement("option");
-      el.innerHTML = busStops[i].stopid;
-      el.value = i;
-      busStopsDropdown.appendChild(el);
-    }
-  })
+  getRailStops(updateRailItems)
+  getLuasStops(updateLuasItems)
+  getBusStops(updateBusItems)
 })
+
+function searchRailItems(q) {
+  var matches = [];
+  if(!railStops)
+    return [];
+  for(var i = 0; i < railStops.length; i++) {
+    if(railStops[i].name.toLowerCase().indexOf(q.toLowerCase()) != -1) {
+      matches.push(railStops[i]);
+    }
+  }
+  return matches;
+}
+
+function searchLuasItems(q) {
+  var matches = [];
+  if(!luasStops)
+    return [];
+  for(var i = 0; i < luasStops.length; i++) {
+    console.log(luasStops[i], q)
+    if(luasStops[i].toLowerCase().indexOf(q.toLowerCase()) != -1) {
+      console.log("pushing", luasStops[i], "for ", q);
+      matches.push(luasStops[i]);
+    }
+  }
+  return matches;
+
+}
+
+function updateLuasItems(data) {
+  console.log(data);
+  if(!luasStops)
+    luasStops = data;
+  luasInfo = document.getElementById("luas-data");
+  luasDropdown.innerHTML = "<option>--------</option>";
+  for(var i = 0 ; i < data.length; i++) {
+    var el = document.createElement("option");
+    el.innerHTML = data[i];
+    el.value = data[i];
+    luasDropdown.appendChild(el);
+  }
+}
+
+function updateRailItems(data) {
+  if(!railStops)
+    railStops = data;
+  railInfo = document.getElementById("rail-data");
+  dropdown.innerHTML = "<option>--------</option>";
+  for(var i = 0 ; i < data.length; i++) {
+    var el = document.createElement("option");
+    el.value = i;
+    el.innerHTML = data[i].name;
+
+    dropdown.appendChild(el);
+  }
+}
+
+function searchBusItems(q) {
+  var matches = [];
+  if(!busStops)
+    return [];
+  for(var i = 0 ; i < busStops.length; i++) {
+    if(busStops[i].stopid.toLowerCase().indexOf(q.toLowerCase()) != -1) {
+      matches.push(busStops[i]);
+    }
+  }
+  return matches;
+}
+
+function updateBusItems (data) {
+  console.log(data);
+  if(!busStops)
+    busStops = data;
+  busInfo = document.getElementById("bus-data");
+  busStopsDropdown.innerHTML = "<option>--------</option>";
+  for(var i = 0 ; i < data.length; i++) {
+    var el = document.createElement("option");
+    el.innerHTML = data[i].stopid;
+    el.value = i;
+    busStopsDropdown.appendChild(el);
+  }
+}
 
 function busListener() {
   if(busStopsDropdown.value != "--------") {
