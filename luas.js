@@ -57,7 +57,7 @@ var stops = [
   "Brides Glen"
 ]
 
-var pending;
+var pendingIn, pendingOut;
 
 function getLuasStops(cb) {
   cb(stops);
@@ -73,29 +73,49 @@ function isOutbound(el) {
 }
 
 function getLuasStopInfo(stop, cb) {
-  var base = "https://www.luas.ie/luaspid.html?get=";
-  base += stop;
-  var xhr = new XMLHttpRequest();
-  if(pending)
-    pending.abort();
-  xhr.open("GET", base, true);
-  xhr.onload = function() {
-    var el = document.createElement("div");
-    el.innerHTML = this.responseText;
-    var valid = [];
-    var locs = el.querySelectorAll(".location");
-    for(var i = 0 ; i < locs.length; i++) {
-      if(locs[i].innerHTML != "No trams forecast") {
+  var haveInbound = false;
+  var haveOutbound = false;
+  var validInbound = [];
+  var validOutbound = [];
+  if(pendingIn)
+    pendingIn.abort();
+  if(pendingOut)
+    pendingOut.abort();
+  var base = `https://www.luas.ie/luaspid.html?get=${stop}`;
+  ["Inbound", "Outbound"].forEach(function(dir) {
+    var url = `${base}&direction=${dir}`;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    if(dir === "Inbound")
+      pendingIn = xhr;
+    else
+      pendingOut = xhr;
+    xhr.onload = function() {
+      console.log(this.responseText);
+      var el = document.createElement("el");
+      el.innerHTML = this.responseText;
+      var locs = el.getElementsByClassName("location");
+      console.log(locs);
+      for(var i = 0; i < locs.length; i++) {
         var item = {};
         item.dest = locs[i].innerHTML;
         item.time = locs[i].nextSibling.innerHTML;
-        item.dir = isOutbound(locs[i]) ? "Outbound" : "Inbound";
-        valid.push(item);
-        console.log(item);
+        item.dir = dir;
+        if(dir === "Inbound") {
+          validInbound.push(item);
+          haveInbound = true;
+        }
+        else {
+          validOutbound.push(item);
+          haveOutbound = true;
+        }
+        if(haveInbound && haveOutbound) {
+          pendingIn = null;
+          pendingOut = null;
+          cb(validInbound.concat(validOutbound));
+        }
       }
     }
-    cb(valid)
-  }
-  pending = xhr;
-  xhr.send();
+    xhr.send();
+  });
 }
