@@ -116,6 +116,17 @@ function busListener() {
     getBusStopInfo(busStops[busStopsDropdown.value].stopid, function(data) {
       data = data.results;
       busInfo.innerHTML = "";
+      var header = document.createElement("tr");
+      var el = document.createElement("th");
+      el.innerHTML = "Destination";
+      header.appendChild(el);
+      el = document.createElement("th");
+      el.innerHTML = "Route";
+      header.appendChild(el);
+      el = document.createElement("th");
+      el.innerHTML = "Due";
+      header.appendChild(el);
+      busInfo.appendChild(header);
       for(var i = 0 ; i < data.length; i++) {
         var row = document.createElement("tr");
         var dest = document.createElement("td");
@@ -137,6 +148,15 @@ function railListener() {
   if(dropdown.value != "--------") {
     getRailStationData(railStops[dropdown.value].name, function(data) {
       railInfo.innerHTML = "";
+      var header = document.createElement("tr");
+      var el = document.createElement("th");
+      el = document.createElement("th");
+      el.innerHTML = "Destination";
+      header.appendChild(el);
+      el = document.createElement("th");
+      el.innerHTML = "Due";
+      header.appendChild(el);
+      railInfo.appendChild(header);
       for(var i = 0 ; i < data.length; i++) {
         var row = document.createElement("tr");
         var dest = document.createElement("td");
@@ -170,14 +190,27 @@ function luasListener() {
     getLuasStopInfo(luasDropdown.value, function(data) {
       console.log(data);
       luasInfo.innerHTML = "";
+      var header = document.createElement("tr");
+      var el = document.createElement("th");
+      el.innerHTML = "Direction";
+      header.appendChild(el);
+      el = document.createElement("th");
+      el.innerHTML = "Destination";
+      header.appendChild(el);
+      el = document.createElement("th");
+      el.innerHTML = "Arrives in";
+      header.appendChild(el);
+      luasInfo.appendChild(header);
       for(var i = 0 ; i < data.length; i++) {
+        if(data[i].dest === "No trams forecast")
+          continue;
         var row = document.createElement("tr");
         var dir = document.createElement("td");
         var dest = document.createElement("td");
         var time = document.createElement("td");
         dir.innerHTML = data[i].dir;
         dest.innerHTML = data[i].dest;
-        time.innerHTML = data[i].time;
+        time.innerHTML = data[i].time === "DUE" ? "DUE" : data[i].time + " mins";
         row.appendChild(dir);
         row.appendChild(dest);
         row.appendChild(time);

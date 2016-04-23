@@ -10,8 +10,8 @@ function getLocation() {
     }
 }
 function showPosition(position) {
- //   x.innerHTML = "Latitude: " + position.coords.latitude + 
-  //  "<br>Longitude: " + position.coords.longitude; 
+ //   x.innerHTML = "Latitude: " + position.coords.latitude +
+  //  "<br>Longitude: " + position.coords.longitude;
 
     lat = position.coords.latitude;
     long_ = position.coords.longitude;
@@ -39,7 +39,7 @@ function buildQuery(){
     query += [south_lat,west_long,north_lat,east_long].join(",");
     query += "?key=" + key;
     return query;
-	
+
 }
 
-document.addEventListener("DOMContentLoaded", getLocation);
+// document.addEventListener("DOMContentLoaded", getLocation);
